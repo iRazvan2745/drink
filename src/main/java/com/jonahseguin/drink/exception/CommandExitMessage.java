@@ -10,6 +10,7 @@ public class CommandExitMessage extends Exception {
     }
 
     public void print(CommandSender sender) {
+        if (getMessage() == null || getMessage().isEmpty()) return;
         sender.sendMessage(ChatColor.RED + getMessage());
     }
 }
