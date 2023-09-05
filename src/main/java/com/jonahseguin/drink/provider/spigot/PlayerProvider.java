@@ -4,6 +4,7 @@ import com.jonahseguin.drink.argument.CommandArg;
 import com.jonahseguin.drink.exception.CommandExitMessage;
 import com.jonahseguin.drink.parametric.DrinkProvider;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -61,6 +62,6 @@ public class PlayerProvider extends DrinkProvider<Player> {
     @Override
     public List<String> getSuggestions(@Nonnull String prefix) {
         final String finalPrefix = prefix.toLowerCase();
-        return plugin.getServer().getOnlinePlayers().stream().map(p -> p.getName().toLowerCase()).filter(s -> finalPrefix.length() == 0 || s.startsWith(finalPrefix)).collect(Collectors.toList());
+        return plugin.getServer().getOnlinePlayers().stream().map(HumanEntity::getName).filter(s -> finalPrefix.isEmpty() || s.toLowerCase().startsWith(finalPrefix)).collect(Collectors.toList());
     }
 }

@@ -1,5 +1,6 @@
 package com.jonahseguin.drink.command;
 
+import com.jonahseguin.drink.argument.CommandArgs;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -32,7 +33,7 @@ public class DrinkTabCompleter implements TabCompleter {
                 }
                 DrinkCommand drinkCommand = data.getKey();
                 if (drinkCommand.getConsumingProviders().length > tabCompletingIndex) {
-                    List<String> s = drinkCommand.getConsumingProviders()[tabCompletingIndex].getSuggestions(sender, tabCompleting);
+                    List<String> s = drinkCommand.getConsumingProviders()[tabCompletingIndex].getSuggestions(sender, tabCompleting, List.of(args));
                     if (s != null) {
                         List<String> suggestions = new ArrayList<>(s);
                         if (args.length == 0 || args.length == 1) {

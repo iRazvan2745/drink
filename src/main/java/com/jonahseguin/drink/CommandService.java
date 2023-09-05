@@ -85,4 +85,7 @@ public interface CommandService {
      */
     void setAuthorizer(@Nonnull DrinkAuthorizer authorizer);
 
+
+    void unregisterCommands();
+
 }

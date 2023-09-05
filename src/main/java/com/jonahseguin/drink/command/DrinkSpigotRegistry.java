@@ -75,5 +75,19 @@ public class DrinkSpigotRegistry {
     }
 
 
-
+    public void unregister(DrinkCommandContainer cmd) {
+        try {
+            Map<String, Command> knownCommands = getKnownCommands();
+            if (knownCommands.containsKey(cmd.getName().toLowerCase())) {
+                knownCommands.remove(cmd.getName().toLowerCase()).unregister(commandMap);
+            }
+            for (String s : cmd.getDrinkAliases()) {
+                if (knownCommands.containsKey(s.toLowerCase())) {
+                    knownCommands.remove(s).unregister(commandMap);
+                }
+            }
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+    }
 }

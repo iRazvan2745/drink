@@ -97,6 +97,13 @@ public class DrinkCommandService implements CommandService {
     }
 
     @Override
+    public void unregisterCommands() {
+        commands.values().forEach(cmd -> {
+            spigotRegistry.unregister(cmd);
+        });
+    }
+
+    @Override
     public void registerCommands() {
         commands.values().forEach(cmd -> {
             spigotRegistry.register(cmd, cmd.isOverrideExistingCommands());

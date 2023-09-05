@@ -1,6 +1,7 @@
 package com.jonahseguin.drink.parametric;
 
 import com.jonahseguin.drink.argument.CommandArg;
+import com.jonahseguin.drink.argument.CommandArgs;
 import com.jonahseguin.drink.exception.CommandExitMessage;
 import org.bukkit.command.CommandSender;
 
@@ -35,6 +36,14 @@ public abstract class DrinkProvider<T> {
     }
 
     public List<String> getSuggestions(CommandSender sender, @Nonnull String prefix) {
+        return getSuggestions(prefix);
+    }
+
+    public List<String> getSuggestions(CommandSender sender, @Nonnull String prefix, List<String> args) {
+        return getSuggestions(sender, prefix);
+    }
+
+    public List<String> getSuggestions(@Nonnull String prefix, List<String> args) {
         return getSuggestions(prefix);
     }
 
