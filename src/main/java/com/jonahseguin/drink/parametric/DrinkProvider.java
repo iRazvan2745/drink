@@ -49,11 +49,11 @@ public abstract class DrinkProvider<T> {
     }
 
     public CompletableFuture<List<String>> getSuggestionsAsync(CommandSender sender, @Nonnull String prefix) {
-        return CompletableFuture.completedFuture(null);
+        return getSuggestionsAsync(prefix);
     }
 
     public CompletableFuture<List<String>> getSuggestionsAsync(CommandSender sender, @Nonnull String prefix, List<String> args) {
-        return CompletableFuture.completedFuture(null);
+        return getSuggestionsAsync(sender, prefix);
     }
 
     public CompletableFuture<List<String>> getSuggestionsAsync(@Nonnull String prefix) {
