@@ -2,6 +2,7 @@ package com.jonahseguin.drink.parametric;
 
 import com.google.common.collect.ImmutableList;
 import com.jonahseguin.drink.annotation.*;
+import com.jonahseguin.drink.command.DrinkCommand;
 import lombok.Getter;
 
 import java.lang.annotation.Annotation;
@@ -19,6 +20,7 @@ public class CommandParameter {
     private final List<Annotation> modifierAnnotations;
     private final boolean flag;
     private final boolean requireLastArg;
+    private DrinkCommand subCommand;
 
     public CommandParameter(Class<?> type, Parameter parameter, Annotation[] allAnnotations) {
         this.type = type;
@@ -37,6 +39,10 @@ public class CommandParameter {
             }
         }
         return false;
+    }
+
+    public boolean isSubCommand() {
+        return parameter.isAnnotationPresent(SubCommand.class);
     }
 
     public boolean isText() {

@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public abstract class DrinkProvider<T> {
 
@@ -45,6 +46,18 @@ public abstract class DrinkProvider<T> {
 
     public List<String> getSuggestions(@Nonnull String prefix, List<String> args) {
         return getSuggestions(prefix);
+    }
+
+    public CompletableFuture<List<String>> getSuggestionsAsync(CommandSender sender, @Nonnull String prefix) {
+        return CompletableFuture.completedFuture(null);
+    }
+
+    public CompletableFuture<List<String>> getSuggestionsAsync(CommandSender sender, @Nonnull String prefix, List<String> args) {
+        return CompletableFuture.completedFuture(null);
+    }
+
+    public CompletableFuture<List<String>> getSuggestionsAsync(@Nonnull String prefix) {
+        return CompletableFuture.completedFuture(null);
     }
 
     protected boolean hasAnnotation(List<? extends Annotation> list, Class<? extends Annotation> a) {

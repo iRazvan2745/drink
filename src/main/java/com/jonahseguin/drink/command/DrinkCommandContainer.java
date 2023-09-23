@@ -1,7 +1,8 @@
 package com.jonahseguin.drink.command;
 
 import com.google.common.base.Preconditions;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -39,6 +40,16 @@ public class DrinkCommandContainer extends Command implements PluginIdentifiable
             setUsage("/" + name + " " + defaultCommand.getGeneratedUsage());
             setDescription(defaultCommand.getDescription());
             setPermission(defaultCommand.getPermission());
+        }
+        checkAsyncTabComplete();
+    }
+
+    private void checkAsyncTabComplete() {
+        try {
+            Class.forName("com.destroystokyo.paper.event.server.AsyncTabCompleteEvent");
+            Bukkit.getPluginManager().registerEvents(tabCompleter, commandService.getPlugin());
+        } catch (ClassNotFoundException ignored) {
+
         }
     }
 
