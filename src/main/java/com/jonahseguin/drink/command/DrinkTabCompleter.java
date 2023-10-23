@@ -25,19 +25,21 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
     public void onAsyncTabComplete(AsyncTabCompleteEvent e) {
         if (!e.isCommand()) return;
 
+        if (e.getBuffer().length() < 2) return;
+
         String buffer = e.getBuffer().substring(1);
         String[] args = buffer.split(" ");
 
-        if(args.length == 0) return;
+        if (args.length == 0) return;
 
         String commandName = args[0];
-        if(!commandName.equalsIgnoreCase(container.getName())) return;
+        if (!commandName.equalsIgnoreCase(container.getName())) return;
 
         String[] args2 = new String[args.length - 1];
         System.arraycopy(args, 1, args2, 0, args2.length);
         args = args2;
 
-        if(buffer.endsWith(" ")) {
+        if (buffer.endsWith(" ")) {
             args = Arrays.copyOf(args, args.length + 1);
             args[args.length - 1] = "";
         }
@@ -46,7 +48,7 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
         if (data != null && data.getKey() != null) {
             String tabCompleting = "";
             int tabCompletingIndex = 0;
-            if (data.getValue().length > 0 ) {
+            if (data.getValue().length > 0) {
                 tabCompleting = data.getValue()[data.getValue().length - 1];
                 tabCompletingIndex = data.getValue().length - 1;
             }

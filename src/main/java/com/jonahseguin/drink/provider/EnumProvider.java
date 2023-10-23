@@ -56,8 +56,8 @@ public class EnumProvider<T extends Enum<T>> extends DrinkProvider<T> {
 
         for (T entry : enumClass.getEnumConstants()) {
             String name = simplify(entry.name());
-            if (test.length() == 0 || name.startsWith(test)) {
-                suggestions.add(entry.name().toLowerCase());
+            if (test.isEmpty() || name.startsWith(test)) {
+                suggestions.add(entry.name().charAt(0) + entry.name().substring(1).toLowerCase());
             }
         }
 
