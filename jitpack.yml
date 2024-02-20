@@ -1,7 +1,7 @@
 jdk:
   - 'openjdk17'
 before_install:
-  - 'git clone https://github.com/WiIIiam278/HuskHomes.git --recurse-submodules'
+  - 'git clone https://github.com/alexdev03/drink.git'
   - 'chmod +x gradlew'
   - 'chmod +x ./.scripts/ensure-java-17'
   - 'bash ./.scripts/ensure-java-17 install'
