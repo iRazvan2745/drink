@@ -20,6 +20,7 @@ public class DrinkCommand {
     private final String description;
     private final String usage;
     private final String permission;
+    private final String permissionMessage;
     private final Object handler;
     private final Method method;
     private final CommandParameters parameters;
@@ -30,13 +31,16 @@ public class DrinkCommand {
     private final boolean requiresAsync;
     private final String generatedUsage;
 
-    public DrinkCommand(DrinkCommandService commandService, String name, Set<String> aliases, String description, String usage, boolean async, String permission, Object handler, Method method) throws MissingProviderException, CommandStructureException {
+    public DrinkCommand(DrinkCommandService commandService, String name, Set<String> aliases, String description, String usage, boolean async,
+                        String permission, String permissionMessage, Object handler, Method method)
+            throws MissingProviderException, CommandStructureException {
         this.commandService = commandService;
         this.name = name;
         this.aliases = aliases;
         this.description = description;
         this.usage = usage;
         this.permission = permission;
+        this.permissionMessage = permissionMessage;
         this.handler = handler;
         this.method = method;
         this.parameters = new CommandParameters(method);
@@ -47,16 +51,15 @@ public class DrinkCommand {
         this.requiresAsync = async || calculateRequiresAsync();
         this.generatedUsage = generateUsage();
         this.allAliases = aliases;
-        if (name.length() > 0 && !name.equals(DrinkCommandService.DEFAULT_KEY)) {
+        if (!name.isEmpty() && !name.equals(DrinkCommandService.DEFAULT_KEY)) {
             allAliases.add(name);
         }
     }
 
     public String getMostApplicableUsage() {
-        if (usage.length() > 0) {
+        if (!usage.isEmpty()) {
             return usage;
-        }
-        else {
+        } else {
             return generatedUsage;
         }
     }
@@ -64,8 +67,7 @@ public class DrinkCommand {
     public String getShortDescription() {
         if (description.length() > 24) {
             return description.substring(0, 21) + "...";
-        }
-        else {
+        } else {
             return description;
         }
     }
@@ -78,8 +80,7 @@ public class DrinkCommand {
             String description = parameter.getParameter().getName(); // provider.argumentDescription()
             if (parameter.isFlag()) {
                 sb.append("-").append(parameter.getFlag().value()).append(" ");
-            }
-            else {
+            } else {
                 if (provider.doesConsumeArgument()) {
                     if (parameter.isOptional()) {
                         sb.append("[").append(description);

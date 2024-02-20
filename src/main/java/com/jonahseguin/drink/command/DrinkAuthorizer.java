@@ -2,6 +2,8 @@ package com.jonahseguin.drink.command;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -11,16 +13,20 @@ import javax.annotation.Nonnull;
 @Setter
 public class DrinkAuthorizer {
 
-    private String noPermissionMessage = ChatColor.RED + "You do not have permission to perform this command.";
+    private Component noPermissionMessage = Component.text("You do not have permission to perform /{command}", TextColor.color(0xFF0000));
 
-    public boolean isAuthorized(@Nonnull CommandSender sender, @Nonnull DrinkCommand command) {
-        if (command.getPermission() != null && command.getPermission().length() > 0) {
-            if (!sender.hasPermission(command.getPermission())) {
-                sender.sendMessage(noPermissionMessage);
-                return false;
-            }
+    public boolean isAuthorized(@Nonnull CommandSender sender, @Nonnull DrinkCommand command, @Nonnull String label) {
+        if (command.getPermission() == null || !command.getPermission().isEmpty()) {
+            return true;
         }
-        return true;
+        if (sender.hasPermission(command.getPermission())) {
+            return true;
+        }
+        final String message = command.getPermissionMessage();
+        Component component = message != null && !message.isEmpty() ? Component.text(message) : noPermissionMessage;
+        component = component.replaceText(builder -> builder.matchLiteral("{command}").replacement(label));
+        sender.sendMessage(component);
+        return false;
     }
 
 }

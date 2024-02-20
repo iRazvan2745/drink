@@ -9,6 +9,19 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface Require {
 
+    /**
+     * Returns the permission node required to perform a command.
+     *
+     * @return the value of the annotation
+     */
     String value();
+
+    /**
+     * Returns the default message when the user does not have permission to perform a command.
+     * {command} will be replaced with the command label.
+     *
+     * @return the default permission message
+     */
+    String message() default "You do not have permission to perform this command.";
 
 }

@@ -1,0 +1,56 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url = uri('https://hub.spigotmc.org/nexus/content/groups/public/')
+    }
+
+    maven {
+        url = uri('https://oss.sonatype.org/content/repositories/snapshots/')
+    }
+
+    maven {
+        url = uri('https://repo.papermc.io/repository/maven-public/')
+    }
+
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+}
+
+dependencies {
+    compileOnly 'io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT'
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+
+    implementation libs.com.google.code.findbugs.jsr305
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+}
+
+group = 'com.jonahseguin'
+version = '1.5.1'
+description = 'drink'
+java.sourceCompatibility = JavaVersion.VERSION_17
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc) {
+    options.encoding = 'UTF-8'
+}
