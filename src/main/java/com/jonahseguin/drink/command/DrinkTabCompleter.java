@@ -45,7 +45,7 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
             args[args.length - 1] = "";
         }
 
-        Map.Entry<DrinkCommand, String[]> data = container.getCommand(args);
+        Map.Entry<DrinkCommand, String[]> data = container.getCommandWithPermission(args, e.getSender());
         if (data != null && data.getKey() != null) {
             String tabCompleting = "";
             int tabCompletingIndex = 0;
@@ -64,7 +64,7 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
                         if (args.length > 0) {
                             tC = args[args.length - 1];
                         }
-                        suggestions.addAll(container.getCommandSuggestions(tC));
+                        suggestions.addAll(container.getCommandSuggestions(tC, e.getSender()));
                     }
                     e.setCompletions(suggestions);
                 } else {
@@ -73,7 +73,7 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
                         if (args.length > 0) {
                             tC = args[args.length - 1];
                         }
-                        e.setCompletions(container.getCommandSuggestions(tC));
+                        e.setCompletions(container.getCommandSuggestions(tC, e.getSender()));
                     }
                 }
             } else {
@@ -82,7 +82,7 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
                     if (args.length > 0) {
                         tC = args[args.length - 1];
                     }
-                    e.setCompletions(container.getCommandSuggestions(tC));
+                    e.setCompletions(container.getCommandSuggestions(tC, e.getSender()));
                 }
             }
         } else {
@@ -91,7 +91,7 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
                 if (args.length > 0) {
                     tC = args[args.length - 1];
                 }
-                e.setCompletions(container.getCommandSuggestions(tC));
+                e.setCompletions(container.getCommandSuggestions(tC, e.getSender()));
             }
         }
 
@@ -100,7 +100,7 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
         if (command.getName().equalsIgnoreCase(container.getName())) {
-            Map.Entry<DrinkCommand, String[]> data = container.getCommand(args);
+            Map.Entry<DrinkCommand, String[]> data = container.getCommandWithPermission(args, sender);
             if (data != null && data.getKey() != null) {
                 String tabCompleting = "";
                 int tabCompletingIndex = 0;
@@ -118,7 +118,7 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
                             if (args.length > 0) {
                                 tC = args[args.length - 1];
                             }
-                            suggestions.addAll(container.getCommandSuggestions(tC));
+                            suggestions.addAll(container.getCommandSuggestions(tC, sender));
                         }
                         return suggestions;
                     } else {
@@ -127,7 +127,7 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
                             if (args.length > 0) {
                                 tC = args[args.length - 1];
                             }
-                            return container.getCommandSuggestions(tC);
+                            return container.getCommandSuggestions(tC, sender);
                         }
                     }
                 } else {
@@ -136,7 +136,7 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
                         if (args.length > 0) {
                             tC = args[args.length - 1];
                         }
-                        return container.getCommandSuggestions(tC);
+                        return container.getCommandSuggestions(tC, sender);
                     }
                 }
             } else {
@@ -145,7 +145,7 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
                     if (args.length > 0) {
                         tC = args[args.length - 1];
                     }
-                    return container.getCommandSuggestions(tC);
+                    return container.getCommandSuggestions(tC, sender);
                 }
             }
         }

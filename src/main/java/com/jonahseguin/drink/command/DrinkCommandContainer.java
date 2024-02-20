@@ -57,25 +57,19 @@ public class DrinkCommandContainer extends Command implements PluginIdentifiable
         return commandService.registerSub(this, handler);
     }
 
-    public List<String> getCommandSuggestions(@Nonnull String prefix) {
+    public List<String> getCommandSuggestions(@Nonnull String prefix, @Nonnull CommandSender sender) {
         Preconditions.checkNotNull(prefix, "Prefix cannot be null");
         final String p = prefix.toLowerCase();
-        List<String> suggestions = new ArrayList<>();
-        for (DrinkCommand c : commands.values()) {
-            for (String alias : c.getAllAliases()) {
-                if (alias.length() > 0) {
-                    if (p.length() == 0 || alias.toLowerCase().startsWith(p)) {
-                        suggestions.add(alias);
-                    }
-                }
-            }
-        }
-        return suggestions;
+        return commands.values().stream()
+                .filter(c -> sender.hasPermission(c.getPermission()))
+                .flatMap(c -> c.getAllAliases().stream())
+                .filter(alias -> !alias.isEmpty() && (p.isEmpty() || alias.toLowerCase().startsWith(p)))
+                .toList();
     }
 
     private DrinkCommand calculateDefaultCommand() {
         for (DrinkCommand dc : commands.values()) {
-            if (dc.getName().length() == 0 || dc.getName().equals(DrinkCommandService.DEFAULT_KEY)) {
+            if (dc.getName().isEmpty() || dc.getName().equals(DrinkCommandService.DEFAULT_KEY)) {
                 // assume default!
                 return dc;
             }
@@ -116,6 +110,21 @@ public class DrinkCommandContainer extends Command implements PluginIdentifiable
             DrinkCommand drinkCommand = getByKeyOrAlias(key);
             if (drinkCommand != null) {
                 return new AbstractMap.SimpleEntry<>(drinkCommand, Arrays.copyOfRange(args, i + 1, args.length));
+            }
+        }
+        return new AbstractMap.SimpleEntry<>(getDefaultCommand(), args);
+    }
+
+    @Nullable
+    public Map.Entry<DrinkCommand, String[]> getCommandWithPermission(String[] args, CommandSender commandSender) {
+        for (int i = (args.length - 1); i >= 0; i--) {
+            String key = commandService.getCommandKey(StringUtils.join(Arrays.asList(Arrays.copyOfRange(args, 0, i + 1)), ' '));
+            DrinkCommand drinkCommand = getByKeyOrAlias(key);
+            if (drinkCommand != null) {
+                if (drinkCommand.getPermission().isEmpty() || commandSender.hasPermission(drinkCommand.getPermission())) {
+                    System.out.println("Returning " + drinkCommand.getName() + " as "  + commandSender.getName() + " has permission " + drinkCommand.getPermission());
+                    return new AbstractMap.SimpleEntry<>(drinkCommand, Arrays.copyOfRange(args, i + 1, args.length));
+                }
             }
         }
         return new AbstractMap.SimpleEntry<>(getDefaultCommand(), args);

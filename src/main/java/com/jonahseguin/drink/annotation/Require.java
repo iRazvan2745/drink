@@ -22,6 +22,6 @@ public @interface Require {
      *
      * @return the default permission message
      */
-    String message() default "You do not have permission to perform this command.";
+    String message() default "";
 
 }
