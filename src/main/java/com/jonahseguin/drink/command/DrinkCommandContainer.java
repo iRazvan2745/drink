@@ -122,7 +122,6 @@ public class DrinkCommandContainer extends Command implements PluginIdentifiable
             DrinkCommand drinkCommand = getByKeyOrAlias(key);
             if (drinkCommand != null) {
                 if (drinkCommand.getPermission().isEmpty() || commandSender.hasPermission(drinkCommand.getPermission())) {
-                    System.out.println("Returning " + drinkCommand.getName() + " as "  + commandSender.getName() + " has permission " + drinkCommand.getPermission());
                     return new AbstractMap.SimpleEntry<>(drinkCommand, Arrays.copyOfRange(args, i + 1, args.length));
                 }
             }
