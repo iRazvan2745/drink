@@ -1,7 +1,7 @@
 package com.jonahseguin.drink.parametric;
 
 import com.jonahseguin.drink.argument.CommandArg;
-import com.jonahseguin.drink.argument.CommandArgs;
+import com.jonahseguin.drink.argument.Commandparameters;
 import com.jonahseguin.drink.exception.CommandExitMessage;
 import org.bukkit.command.CommandSender;
 
@@ -40,15 +40,15 @@ public abstract class DrinkProvider<T> {
         return getSuggestions(prefix);
     }
 
-    public List<String> getSuggestions(CommandSender sender, @Nonnull String prefix, List<String> args) {
+    public List<String> getSuggestions(CommandSender sender, @Nonnull String prefix, List<CommandParameter> parameters) {
         return getSuggestions(sender, prefix);
     }
 
-    public List<String> getSuggestions(CommandSender sender, @Nonnull String prefix, List<String> args, List<Annotation> annotations) {
-        return getSuggestions(sender, prefix, args);
+    public List<String> getSuggestions(CommandSender sender, @Nonnull String prefix, List<CommandParameter> parameters, List<Annotation> annotations) {
+        return getSuggestions(sender, prefix, parameters);
     }
 
-    public List<String> getSuggestions(@Nonnull String prefix, List<String> args) {
+    public List<String> getSuggestions(@Nonnull String prefix, List<String> parameters) {
         return getSuggestions(prefix);
     }
 
@@ -56,12 +56,12 @@ public abstract class DrinkProvider<T> {
         return getSuggestionsAsync(prefix);
     }
 
-    public CompletableFuture<List<String>> getSuggestionsAsync(CommandSender sender, @Nonnull String prefix, List<String> args) {
+    public CompletableFuture<List<String>> getSuggestionsAsync(CommandSender sender, @Nonnull String prefix, List<CommandParameter> parameters) {
         return getSuggestionsAsync(sender, prefix);
     }
 
-    public CompletableFuture<List<String>> getSuggestionsAsync(CommandSender sender, @Nonnull String prefix, List<String> args, List<Annotation> annotations) {
-        return getSuggestionsAsync(sender, prefix, args);
+    public CompletableFuture<List<String>> getSuggestionsAsync(CommandSender sender, @Nonnull String prefix, List<CommandParameter> parameters, List<Annotation> annotations) {
+        return getSuggestionsAsync(sender, prefix, parameters);
     }
 
     public CompletableFuture<List<String>> getSuggestionsAsync(@Nonnull String prefix) {

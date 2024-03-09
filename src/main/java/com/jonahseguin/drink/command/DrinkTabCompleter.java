@@ -59,7 +59,7 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
             if (drinkCommand.getConsumingProviders().length > tabCompletingIndex) {
                 DrinkProvider<?> provider = drinkCommand.getConsumingProviders()[tabCompletingIndex];
                 CommandParameter parameter = drinkCommand.getParameters().getParameters()[tabCompletingIndex];
-                CompletableFuture<List<String>> future = provider.getSuggestionsAsync(e.getSender(), tabCompleting, List.of(args), parameter.getAllAnnotations());
+                CompletableFuture<List<String>> future = provider.getSuggestionsAsync(e.getSender(), tabCompleting, List.of(drinkCommand.getParameters().getParameters()), parameter.getAllAnnotations());
                 List<String> s = future.join();
                 if (s != null) {
                     List<String> suggestions = new ArrayList<>(s);
@@ -116,7 +116,7 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
                 if (drinkCommand.getConsumingProviders().length > tabCompletingIndex) {
                     DrinkProvider<?> provider = drinkCommand.getConsumingProviders()[tabCompletingIndex];
                     CommandParameter parameter = drinkCommand.getParameters().getParameters()[tabCompletingIndex];
-                    List<String> s = provider.getSuggestions(sender, tabCompleting, List.of(args), parameter.getAllAnnotations());
+                    List<String> s = provider.getSuggestions(sender, tabCompleting, List.of(drinkCommand.getParameters().getParameters()), parameter.getAllAnnotations());
                     if (s != null) {
                         List<String> suggestions = new ArrayList<>(s);
                         if (args.length == 0 || args.length == 1) {
