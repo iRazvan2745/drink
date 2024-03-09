@@ -124,9 +124,7 @@ public class DurationProvider extends DrinkProvider<Date> {
             while (true) {
                 if (chars.length > start && start > 0) {
                     char c = chars[start];
-                    System.out.println(c);
                     if (!isTimeModifier(c)) {
-                        System.out.println(start);
                         start--;
                         continue;
                     } else {
