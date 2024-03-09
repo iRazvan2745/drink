@@ -1,6 +1,7 @@
 package com.jonahseguin.drink.command;
 
 import com.destroystokyo.paper.event.server.AsyncTabCompleteEvent;
+import com.google.common.collect.Maps;
 import com.jonahseguin.drink.parametric.CommandParameter;
 import com.jonahseguin.drink.parametric.DrinkProvider;
 import org.bukkit.Bukkit;
@@ -58,7 +59,7 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
             DrinkCommand drinkCommand = data.getKey();
             if (drinkCommand.getConsumingProviders().length > tabCompletingIndex) {
                 DrinkProvider<?> provider = drinkCommand.getConsumingProviders()[tabCompletingIndex];
-                TreeMap<CommandParameter, String> parameters = new TreeMap<>();
+                Map<CommandParameter, String> parameters = Maps.newLinkedHashMap();
                 int index = 0;
                 for (CommandParameter parameter : drinkCommand.getParameters().getParameters()) {
                     String name = args.length > index ? args[index] : null;
@@ -123,7 +124,7 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
                 if (drinkCommand.getConsumingProviders().length > tabCompletingIndex) {
                     DrinkProvider<?> provider = drinkCommand.getConsumingProviders()[tabCompletingIndex];
                     CommandParameter commandParameter = drinkCommand.getParameters().getParameters()[tabCompletingIndex];
-                    TreeMap<CommandParameter, String> parameters = new TreeMap<>();
+                    Map<CommandParameter, String> parameters = Maps.newLinkedHashMap();
                     int index = 0;
                     for (CommandParameter parameter : drinkCommand.getParameters().getParameters()) {
                         String name = args.length > index ? args[index] : null;

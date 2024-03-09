@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 
@@ -40,11 +41,11 @@ public abstract class DrinkProvider<T> {
         return getSuggestions(prefix);
     }
 
-    public List<String> getSuggestions(CommandSender sender, @Nonnull String prefix, TreeMap<CommandParameter, String> parameters) {
+    public List<String> getSuggestions(CommandSender sender, @Nonnull String prefix, Map<CommandParameter, String> parameters) {
         return getSuggestions(sender, prefix);
     }
 
-    public List<String> getSuggestions(CommandSender sender, @Nonnull String prefix, TreeMap<CommandParameter, String> parameters, List<Annotation> annotations) {
+    public List<String> getSuggestions(CommandSender sender, @Nonnull String prefix, Map<CommandParameter, String> parameters, List<Annotation> annotations) {
         return getSuggestions(sender, prefix, parameters);
     }
 
@@ -56,11 +57,11 @@ public abstract class DrinkProvider<T> {
         return getSuggestionsAsync(prefix);
     }
 
-    public CompletableFuture<List<String>> getSuggestionsAsync(CommandSender sender, @Nonnull String prefix, TreeMap<CommandParameter, String> parameters) {
+    public CompletableFuture<List<String>> getSuggestionsAsync(CommandSender sender, @Nonnull String prefix, Map<CommandParameter, String> parameters) {
         return getSuggestionsAsync(sender, prefix);
     }
 
-    public CompletableFuture<List<String>> getSuggestionsAsync(CommandSender sender, @Nonnull String prefix, TreeMap<CommandParameter, String> parameters, List<Annotation> annotations) {
+    public CompletableFuture<List<String>> getSuggestionsAsync(CommandSender sender, @Nonnull String prefix, Map<CommandParameter, String> parameters, List<Annotation> annotations) {
         return getSuggestionsAsync(sender, prefix, parameters);
     }
 
