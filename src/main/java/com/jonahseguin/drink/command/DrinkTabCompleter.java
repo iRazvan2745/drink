@@ -1,6 +1,8 @@
 package com.jonahseguin.drink.command;
 
 import com.destroystokyo.paper.event.server.AsyncTabCompleteEvent;
+import com.jonahseguin.drink.parametric.CommandParameter;
+import com.jonahseguin.drink.parametric.DrinkProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -55,7 +57,9 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
             }
             DrinkCommand drinkCommand = data.getKey();
             if (drinkCommand.getConsumingProviders().length > tabCompletingIndex) {
-                CompletableFuture<List<String>> future = drinkCommand.getConsumingProviders()[tabCompletingIndex].getSuggestionsAsync(e.getSender(), tabCompleting, List.of(args));
+                DrinkProvider<?> provider = drinkCommand.getConsumingProviders()[tabCompletingIndex];
+                CommandParameter parameter = drinkCommand.getParameters().getParameters()[tabCompletingIndex];
+                CompletableFuture<List<String>> future = provider.getSuggestionsAsync(e.getSender(), tabCompleting, List.of(args), parameter.getAllAnnotations());
                 List<String> s = future.join();
                 if (s != null) {
                     List<String> suggestions = new ArrayList<>(s);
@@ -110,7 +114,9 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
                 }
                 DrinkCommand drinkCommand = data.getKey();
                 if (drinkCommand.getConsumingProviders().length > tabCompletingIndex) {
-                    List<String> s = drinkCommand.getConsumingProviders()[tabCompletingIndex].getSuggestions(sender, tabCompleting, List.of(args));
+                    DrinkProvider<?> provider = drinkCommand.getConsumingProviders()[tabCompletingIndex];
+                    CommandParameter parameter = drinkCommand.getParameters().getParameters()[tabCompletingIndex];
+                    List<String> s = provider.getSuggestions(sender, tabCompleting, List.of(args), parameter.getAllAnnotations());
                     if (s != null) {
                         List<String> suggestions = new ArrayList<>(s);
                         if (args.length == 0 || args.length == 1) {

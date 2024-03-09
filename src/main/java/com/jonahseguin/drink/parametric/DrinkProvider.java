@@ -44,6 +44,10 @@ public abstract class DrinkProvider<T> {
         return getSuggestions(sender, prefix);
     }
 
+    public List<String> getSuggestions(CommandSender sender, @Nonnull String prefix, List<String> args, List<Annotation> annotations) {
+        return getSuggestions(sender, prefix, args);
+    }
+
     public List<String> getSuggestions(@Nonnull String prefix, List<String> args) {
         return getSuggestions(prefix);
     }
@@ -54,6 +58,10 @@ public abstract class DrinkProvider<T> {
 
     public CompletableFuture<List<String>> getSuggestionsAsync(CommandSender sender, @Nonnull String prefix, List<String> args) {
         return getSuggestionsAsync(sender, prefix);
+    }
+
+    public CompletableFuture<List<String>> getSuggestionsAsync(CommandSender sender, @Nonnull String prefix, List<String> args, List<Annotation> annotations) {
+        return getSuggestionsAsync(sender, prefix, args);
     }
 
     public CompletableFuture<List<String>> getSuggestionsAsync(@Nonnull String prefix) {
