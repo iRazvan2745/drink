@@ -57,3 +57,5 @@ buildNumber.properties
 .mvn/timing.properties
 *.rdb
 /build/
+/.gradle/
+build/
