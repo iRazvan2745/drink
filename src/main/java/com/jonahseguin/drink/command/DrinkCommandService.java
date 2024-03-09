@@ -81,8 +81,6 @@ public class DrinkCommandService implements CommandService {
         bind(Date.class).toProvider(DateProvider.INSTANCE);
         bind(Date.class).annotatedWith(Duration.class).toProvider(DurationProvider.INSTANCE);
 
-        bind(Enum.class).toProvider(EnumProvider.INSTANCE);
-
         bind(CommandArgs.class).toProvider(CommandArgsProvider.INSTANCE);
 
         bind(CommandSender.class).annotatedWith(Sender.class).toProvider(CommandSenderProvider.INSTANCE);
@@ -184,8 +182,7 @@ public class DrinkCommandService implements CommandService {
                 sender.sendMessage(ChatColor.RED + "Could not perform command.  Notify an administrator");
                 throw new DrinkException("Failed to execute command '" + command.getName() + "' with arguments '" + StringUtils.join(Arrays.asList(args), ' ') + " for sender " + sender.getName(), ex);
             }
-        }
-        catch (CommandExitMessage ex) {
+        } catch (CommandExitMessage ex) {
             ex.print(sender);
         } catch (CommandArgumentException ex) {
             sender.sendMessage(ChatColor.RED + ex.getMessage());
@@ -211,6 +208,22 @@ public class DrinkCommandService implements CommandService {
             return (BindingContainer<T>) bindings.get(type);
         }
         return null;
+    }
+
+    public <T extends Enum<T>> BindingContainer<T> getEnumBindingsFor(@Nonnull Class<T> type) {
+        Preconditions.checkNotNull(type, "Type cannot be null");
+
+        if (!type.isEnum()) {
+            throw new IllegalArgumentException("Type " + type.getSimpleName() + " is not an enum");
+        }
+
+        if (bindings.containsKey(type)) {
+            return (BindingContainer<T>) bindings.get(type);
+        }
+
+        EnumProvider<T> provider = new EnumProvider<>(type);
+        bindProvider(type, Collections.emptySet(), provider);
+        return (BindingContainer<T>) bindings.get(type);
     }
 
     @Nullable

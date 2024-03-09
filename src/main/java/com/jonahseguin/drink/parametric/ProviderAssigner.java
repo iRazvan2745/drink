@@ -25,7 +25,8 @@ public class ProviderAssigner {
 
             BindingContainer<?> bindings = commandService.getBindingsFor(param.getType());
             if (bindings == null && param.getType().isEnum()) {
-                bindings = commandService.getBindingsFor(Enum.class);
+                Class<Enum> enumType = (Class<Enum>) param.getType();
+                bindings = commandService.getEnumBindingsFor(enumType);
             }
             if (bindings != null) {
                 DrinkProvider<?> provider = null;
