@@ -4,7 +4,6 @@ import com.destroystokyo.paper.event.server.AsyncTabCompleteEvent;
 import com.google.common.collect.Maps;
 import com.jonahseguin.drink.parametric.CommandParameter;
 import com.jonahseguin.drink.parametric.DrinkProvider;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -37,7 +36,10 @@ public class DrinkTabCompleter implements TabCompleter, Listener {
         if (args.length == 0) return;
 
         String commandName = args[0];
-        if (!commandName.equalsIgnoreCase(container.getName())) return;
+        if (!commandName.equalsIgnoreCase(container.getName()) && container.getAliases().stream().noneMatch(s -> s.equalsIgnoreCase(commandName))) {
+            return;
+        }
+
 
         String[] args2 = new String[args.length - 1];
         System.arraycopy(args, 1, args2, 0, args2.length);
